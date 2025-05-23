@@ -2,7 +2,7 @@
 
 # Language Identification for 2000 languages: Optimized for low-resource langauges
 
-TL;DR: The model is trained on [GlotLID-C](https://huggingface.co/datasets/cis-lmu/glotlid-corpus), and supports 2099 languages.
+**TL;DR:** The model is trained on the [GlotLID-C dataset](https://huggingface.co/datasets/cis-lmu/glotlid-corpus) using Supervised Contrastive Learning. It supports **2,099 languages** and is, especially, effective for low-resource languages.
 
 ### 🛠️ Setup
 ```

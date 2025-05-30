@@ -12,14 +12,14 @@ pip install -r requirements.txt
 ### 🤖 Usage
 
 **Download the model**
-```
+```python
 from huggingface_hub import snapshot_download
 
 snapshot_download(repo_id="epfl-nlp/ConLID", local_dir="checkpoint")
 ```
 
 **Use the model**
-```
+```python
 from model import ConLID
 model = ConLID.from_pretrained(dir='checkpoint')
 

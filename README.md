@@ -1,8 +1,8 @@
-[![Model](https://img.shields.io/badge/🤗%20Hugging%20Face-Model-purple)](https://huggingface.co/Jakh0103/lid)
+[![Model](https://img.shields.io/badge/🤗%20Hugging%20Face-Model-purple)](https://huggingface.co/epfl-nlp/ConLID)
 
 # Language Identification for 2000 languages: Optimized for low-resource langauges
 
-**TL;DR:** The model is trained on the [GlotLID-C dataset](https://huggingface.co/datasets/cis-lmu/glotlid-corpus) using Supervised Contrastive Learning. It supports **2,099 languages** and is, especially, effective for low-resource languages.
+**TL;DR:** We introduce **ConLID**, a model trained on [GlotLID-C dataset](https://huggingface.co/datasets/cis-lmu/glotlid-corpus) using Supervised Contrastive Learning. It supports **2,099 languages** and is, especially, effective for **low-resource languages**.
 
 ### 🛠️ Setup
 ```
@@ -15,13 +15,13 @@ pip install -r requirements.txt
 ```
 from huggingface_hub import snapshot_download
 
-snapshot_download(repo_id="Jakh0103/lid", local_dir="checkpoint")
+snapshot_download(repo_id="epfl-nlp/ConLID", local_dir="checkpoint")
 ```
 
 **Use the model**
 ```
-from model import LID
-model = LID.from_pretrained(dir='checkpoint')
+from model import ConLID
+model = ConLID.from_pretrained(dir='checkpoint')
 
 # print the supported labels
 print(model.get_labels())
@@ -36,6 +36,7 @@ model.predict("The cat climbed onto the roof to enjoy the warm sunlight peaceful
 ```
 
 ### 🎯 TODO
+- [x] Release the inference code
 - [ ] Release the training code
 - [ ] Release the evaluation code
 - [ ] Optimize the inference using parallel tokenization

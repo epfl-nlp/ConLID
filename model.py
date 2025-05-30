@@ -32,7 +32,7 @@ class SpaceTokenizer:
         return self._strip_strings(self._split_words(text))
 
 
-class LID(nn.Module):
+class ConLID(nn.Module):
     def __init__(
         self,
         vocab_size: int,
@@ -47,7 +47,7 @@ class LID(nn.Module):
         unk_id: int = 1
     ):
         """
-        Initializes the LID model.
+        Initializes the ConLID model.
 
         Args:
             vocab_size (int): Vocabulary size.
@@ -187,7 +187,7 @@ class LID(nn.Module):
             dir (str): Path to the directory containing the model files.
 
         Returns:
-            LID: Loaded model.
+            ConLID: Loaded model.
         """
         config = cls._load_json(os.path.join(dir, 'config.json'))
         model = cls(**config)

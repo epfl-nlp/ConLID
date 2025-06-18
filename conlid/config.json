@@ -1,0 +1,10 @@
+{
+  "aggr": "mean",
+  "embedding_size": 256,
+  "bucket": 1000000,
+  "min_count": 1000,
+  "minn": 2,
+  "maxn": 5,
+  "pad_id": 1,
+  "unk_id": 0
+}

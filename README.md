@@ -5,6 +5,9 @@
   <a href="https://arxiv.org/abs/2506.15304">
     <img alt="arXiv" src="https://img.shields.io/badge/arXiv-Paper-red">
   </a>
+  <!-- <a href="https://opensource.org/licenses/MIT">
+    <img alt="License" src="https://img.shields.io/badge/License-MIT-green.svg">
+  </a> -->
 </p>
 
 # ConLID: Supervised Contrastive Learning for Low-Resource Language Identification
@@ -12,6 +15,8 @@
 <p align="center">
   <img src="assets/LID_figure.png" alt="Model Overview" width="500"/>
 </p>
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT) 
 
 Code an model for paper: "[ConLID: Supervised Contrastive Learning for Low-Resource Language Identification](https://arxiv.org/abs/2506.15304)" arXiv - 2025
 

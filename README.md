@@ -10,7 +10,7 @@
 # ConLID: Supervised Contrastive Learning for Low-Resource Language Identification
 
 <p align="center">
-  <img src="assets/figure.png" alt="Model Overview" width="500"/>
+  <img src="assets/LID_figure.png" alt="Model Overview" width="500"/>
 </p>
 
 Code an model for paper: "[ConLID: Supervised Contrastive Learning for Low-Resource Language Identification](https://arxiv.org/abs/2506.15304)" arXiv - 2025

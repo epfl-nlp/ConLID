@@ -2,9 +2,9 @@
   <a href="https://huggingface.co/epfl-nlp/ConLID">
     <img alt="Model" src="https://img.shields.io/badge/🤗%20Hugging%20Face-Model-purple">
   </a>
-  <!-- <a href="https://arxiv.org/abs/your_arxiv_id_here">
+  <a href="https://arxiv.org/abs/2506.15304">
     <img alt="arXiv" src="https://img.shields.io/badge/arXiv-Paper-red">
-  </a> -->
+  </a>
 </p>
 
 # Language Identification for 2000 languages: Optimized for low-resource langauges
@@ -73,4 +73,14 @@ bash scripts/train_conlid_s.sh  # Trains the ConLID-S model
 - [x] Release the training code
 - [ ] Release the evaluation code
 - [ ] Optimize the inference using parallel tokenization
-- [ ] Publish the preprint on arXiv
+
+### ⭐️ Citation
+If you find this project useful, welcome to cite us:
+```bibtex
+@article{foroutan2025conlid,
+  title={ConLID: Supervised Contrastive Learning for Low-Resource Language Identification},
+  author={Negar Foroutan and Jakhongir Saydaliev and Ye Eun Kim and Antoine Bosselut},
+  journal={arXiv preprint arXiv:2506.15304},
+  year={2025}
+}
+```

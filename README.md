@@ -7,12 +7,13 @@
   </a>
 </p>
 
-# Language Identification for 2000 languages: Optimized for low-resource langauges
+# ConLID: Supervised Contrastive Learning for Low-Resource Language Identification
 
 <p align="center">
   <img src="assets/figure.png" alt="Model Overview" width="500"/>
 </p>
 
+Code an model for paper "[ConLID: Supervised Contrastive Learning for Low-Resource Language Identification](https://arxiv.org/abs/2506.15304)" arXiv - 2025
 **TL;DR:** We introduce **ConLID**, a model trained on [GlotLID-C dataset](https://huggingface.co/datasets/cis-lmu/glotlid-corpus) using Supervised Contrastive Learning. It supports **2,099 languages** and is, especially, effective for **low-resource languages**.
 
 ### 🛠️ Setup

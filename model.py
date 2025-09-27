@@ -225,22 +225,96 @@ class ConLID(nn.Module):
         Returns:
             tuple[list[str], list[float]]: Predicted labels and their probabilities.
         """
-        assert k >= 1, f'`k` must be >= 1; got k={k}'
+        if k == -1:
+            # Return all labels sorted by probability
+            tokens = self._tokenize(text)
+            ids = self._tokens2ngrams(tokens)
+            input_tensor = torch.tensor(ids, dtype=torch.int, device=self.device).unsqueeze(0)
 
-        tokens = self._tokenize(text)
-        ids = self._tokens2ngrams(tokens)
-        input_tensor = torch.tensor(ids, dtype=torch.int, device=self.device).unsqueeze(0)
+            with torch.no_grad():
+                logits = self(input_tensor)
+                probs = logits.softmax(dim=-1).squeeze()
 
-        with torch.no_grad():
-            logits = self(input_tensor)
-            probs = logits.softmax(dim=-1).squeeze()
+            sorted_probs, sorted_indices = probs.sort(descending=True)
+            predictions = [self.id2label[i.item()] for i in sorted_indices]
+            probabilities = sorted_probs.tolist()
+            return predictions, probabilities
+        else:
+            assert k >= 1, f'`k` must be >= 1 or -1; got k={k}'
+            # Tokenize and convert to ids
+            tokens = self._tokenize(text)
+            ids = self._tokens2ngrams(tokens)
+            input_tensor = torch.tensor(ids, dtype=torch.int, device=self.device).unsqueeze(0)
 
-        top_probs, top_indices = probs.topk(k)
-        predictions = [self.id2label[i.item()] for i in top_indices]
-        probabilities = top_probs.tolist()
+            with torch.no_grad():
+                logits = self(input_tensor)
+                probs = logits.softmax(dim=-1).squeeze()
 
-        return predictions, probabilities
+            top_probs, top_indices = probs.topk(k)
+            predictions = [self.id2label[i.item()] for i in top_indices]
+            probabilities = top_probs.tolist()
 
+            return predictions, probabilities
+    
+    def predict_batched(self, texts: list[str], k: int = 1) -> tuple[list[list[str]], list[list[float]]]:
+        """
+        Predicts the top-k labels for a batch of texts.
+
+        Args:
+            texts (list[str]): List of input texts.
+            k (int): Number of top predictions to return per text.
+
+        Returns:
+            tuple[list[list[str]], list[list[float]]]:
+                List of predicted labels and their probabilities for each input text.
+        """
+        if k == -1:
+            # Return all labels sorted by probability for each input
+            batch_tokens = [self._tokenize(text) for text in texts]
+            batch_ids = [self._tokens2ngrams(tokens) for tokens in batch_tokens]
+            max_len = max(len(ids) for ids in batch_ids)
+            padded_ids = [ids + [self.pad_id] * (max_len - len(ids)) for ids in batch_ids]
+            input_tensor = torch.tensor(padded_ids, dtype=torch.int, device=self.device)
+
+            with torch.no_grad():
+                logits = self(input_tensor)
+                probs = logits.softmax(dim=-1)
+
+            all_predictions = []
+            all_probabilities = []
+            for prob in probs:
+                sorted_probs, sorted_indices = prob.sort(descending=True)
+                predictions = [self.id2label[i.item()] for i in sorted_indices]
+                probabilities = sorted_probs.tolist()
+                all_predictions.append(predictions)
+                all_probabilities.append(probabilities)
+
+            return all_predictions, all_probabilities
+        else:
+            assert k >= 1, f'`k` must be >= 1 or -1; got k={k}'
+            # Tokenize and convert to ids
+            batch_tokens = [self._tokenize(text) for text in texts]
+            batch_ids = [self._tokens2ngrams(tokens) for tokens in batch_tokens]
+            # Pad sequences to max length
+            max_len = max(len(ids) for ids in batch_ids)
+            padded_ids = [ids + [self.pad_id] * (max_len - len(ids)) for ids in batch_ids]
+            input_tensor = torch.tensor(padded_ids, dtype=torch.int, device=self.device)
+
+            with torch.no_grad():
+                logits = self(input_tensor)
+                probs = logits.softmax(dim=-1)
+
+            all_predictions = []
+            all_probabilities = []
+            for prob in probs:
+                top_probs, top_indices = prob.topk(k)
+                predictions = [self.id2label[i.item()] for i in top_indices]
+                probabilities = top_probs.tolist()
+                all_predictions.append(predictions)
+                all_probabilities.append(probabilities)
+
+            return all_predictions, all_probabilities
+    
     def forward(self, input_ids: torch.Tensor) -> torch.Tensor:
         """
         Forward pass of the model.

@@ -7,3 +7,4 @@ huggingface_hub==0.26.3
 numpy>=1.21.0
 scikit-learn==1.7.2
 wandb==0.16.2
+fasttext-wheel==0.9.2

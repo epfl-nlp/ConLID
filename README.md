@@ -29,20 +29,29 @@ cd ConLID
 # set the evironment variables as in `.env_example`
 source setup.sh
 ```
+**Download the models**
+```python
+from huggingface_hub import snapshot_download, hf_hub_download
+
+# Download the GlotLID and ConLID models
+snapshot_download(
+  repo_id="epfl-nlp/ConLID",
+  local_dir="checkpoints/conlid"
+)
+hf_hub_download(
+  repo_id="cis-lmu/glotlid",
+  filename="model.bin",
+  local_dir="checkpoints/glotlid",
+  local_dir_use_symlinks=False
+)
+```
 
 ### 🤖 Usage
 
-**Download the model**
-```python
-from huggingface_hub import snapshot_download
-
-snapshot_download(repo_id="epfl-nlp/ConLID", local_dir="checkpoint")
-```
-
-**Use the model**
+**Use the ConLID model as:**
 ```python
 from model import ConLID
-model = ConLID.from_pretrained(dir='checkpoint')
+model = ConLID.from_pretrained(dir='checkpoints/conlid')
 
 # print the supported labels
 print(model.get_labels())
@@ -56,6 +65,11 @@ model.predict("The cat climbed onto the roof to enjoy the warm sunlight peaceful
 ## (['eng_Latn', 'sco_Latn', 'jam_Latn'], [0.970989465713501, 0.006496887654066086, 0.00487488554790616])
 ```
 
+### 📊 Replicating UDHR results
+Run the following command to replicate the results for the [UDHR](https://huggingface.co/datasets/cis-lmu/udhr-lid) dataset. The results will be stored under [results](/results) directory.
+```bash
+python evaluate_udhr.py
+```
 
 ### 💪🏻 Training
 **Download the train dataset under `data/glotlid/`**
@@ -78,7 +92,7 @@ bash scripts/train_conlid_s.sh  # Trains the ConLID-S model
 ### 🎯 TODO
 - [x] Release the inference code
 - [x] Release the training code
-- [ ] Release the evaluation code
+- [x] Release the evaluation code
 - [ ] Optimize the inference using parallel tokenization
 
 ### ⭐️ Citation
